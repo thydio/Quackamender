@@ -1,0 +1,23 @@
+<!-- filepath: c:\purab\projects\New folder\quackamender\login\templates\template.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Quackamender{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-section">
+            <img src="{% static 'quackamender.png' %}" alt="Quackamender Logo" id="logo" style="width: 80px; margin-bottom: 1rem;">
+            <h2>Quackamender</h2>
+        </div>
+        {% block content %}{% endblock %}
+    </div>
+    <script src="{% static 'login.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

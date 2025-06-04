@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ movie.title }} - Details</title>
+    <link rel="stylesheet" href="{% static 'movie.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'quackamender.png' %}" alt="Quackamender Logo" id="logo" style="width: 80px; margin-bottom: 1rem; outline: none; box-shadow: none;">
+                <h2>Quackamender</h2>
+            </a>
+            <p>Are you a movie? Because I can't wait to recommend you to everyone I know.</p>
+            <p>welcome {{ username }}</p>
+        </div>
+        <div class="search-container">
+            <form action="{% url 'search' %}" method="get" style="display: inline;">
+                <input type="text" id="search-input" name="query" placeholder="Search for movies...">
+                <button type="submit" id="search-button">Search</button>
+            </form>
+            <button class="logout-button">Logout</button>
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <button id="search-button">Search</button>
+            <button class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="movie-details">
+            <div class="movie-card" style="display: flex; gap: 2rem; align-items: flex-start;">
+                <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-image" style="width: 250px; border-radius: 8px;">
+                <div>
+                    <h1 class="movie-title">{{ movie.title }}</h1>
+                    <p class="movie-release-date"><strong>Release Date:</strong> {{ movie.release_date }}</p>
+                    <p class="movie-rating"><strong>Rating:</strong> {{ movie.vote_average }}/10</p>
+                    <p class="movie-overview"><strong>Overview:</strong> {{ movie.overview }}</p>
+                    <p class="movie-actors"><strong>Actors:</strong>
+                        {% for actor in actors %}
+                            {{ actor.name }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Not available
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% if search_results is defined and search_results %}
+        <section class="search-results">
+            <h2>Search Results{% if query %} for "{{ query }}"{% endif %}</h2>
+            <ul>
+                {% for result in search_results %}
+                    <li>
+                        <a href="{% url 'movie' result.id %}">
+                            {{ result.title }} ({{ result.release_date|default:"N/A" }})
+                        </a>
+                    </li>
+                {% empty %}
+                    <li>No results found.</li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

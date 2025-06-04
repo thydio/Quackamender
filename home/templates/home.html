@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quackamender Home</title>
+    <link rel="stylesheet" href="{% static 'home.css' %}">
+    <style>
+        .heart-checkbox:checked + span .heart-shape {
+            fill: #e25555;
+        }
+        .heart-checkbox + span .heart-shape {
+            transition: fill 0.2s;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <img src="{% static 'quackamender.png' %}" alt="Quackamender Logo" id="logo" style="width: 80px; margin-bottom: 1rem;">
+            <h2>Quackamender</h2>
+            <p>{{ pickup_line }}</p>
+            <p>Welcome {{ request.user.username }}</p>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search for movies...">
+            <button id="search-button">Search</button>
+            <form method="post" action="{% url 'user_logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </header>
+
+    <div class="recommendations">
+        <h2>Recommendations</h2>
+        <div class="movie-list">
+            {% if recommendations_ready %}
+                {% for movie in recommended_movies %}
+                    {% if movie.id %}
+                    <div class="movie-card">
+                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-image">
+                        <h2 class="movie-title">{{ movie.title }}</h2>
+                        <p class="movie-release-date">Release Date: {{ movie.release_date }}</p>
+                        <div class="movie-actions">
+                            <a href="{% url 'movie' movie.id %}" class="btn btn-primary">View Details</a>
+                            <form method="post" action="{% url 'addtowatchlist' movie.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">Add to Watchlist</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% empty %}
+                    <p>No recommendations available.</p>
+                {% endfor %}
+            {% else %}
+                <p>Loading recommendations... Please wait.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="watchlist">
+        <h2>Watchlist</h2>
+        <div class="movie-list">
+            {% for movie in watchlist_movies %}
+                {% if movie.id %}
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-image">
+                    <h2 class="movie-title">{{ movie.title }}</h2>
+                    <p class="movie-release-date">Release Date: {{ movie.release_date }}</p>
+                    <div class="movie-actions">
+                        <a href="{% url 'movie' movie.id %}" class="btn btn-primary">View Details</a>
+                        <form method="post" action="{% url 'remove_from_watchlist' movie.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <p>Your watchlist is empty.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="popular">
+        <h2>Popular Movies</h2>
+        <div class="movie-list">
+            {% for movie in popular_movies %}
+                {% if movie.id %}
+                <div class="movie-card">
+                    <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-image">
+                    <h2 class="movie-title">{{ movie.title }}</h2>
+                    <p class="movie-release-date">Release Date: {{ movie.release_date }}</p>
+                    <div class="movie-actions">
+                        <a href="{% url 'movie' movie.id %}" class="btn btn-primary">View Details</a>
+                        <form method="post" action="{% url 'addtowatchlist' movie.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-secondary">Add to Watchlist</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+            {% empty %}
+                <p>No popular movies found.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('search-button').addEventListener('click', function() {
+            const query = document.getElementById('search-input').value;
+            if (query.trim() !== "") {
+                window.location.href = "{% url 'search' %}?query=" + encodeURIComponent(query);
+            }
+        });
+        document.getElementById('search-input').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('search-button').click();
+            }
+        });
+    </script>
+</body>
+</html>

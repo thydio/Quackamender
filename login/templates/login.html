@@ -1,0 +1,22 @@
+
+{% extends "template.html" %}
+{% block title %}Login | Quackamender{% endblock %}
+{% block content %}
+<form id="login-form" method="post" action="">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="form-username">Username</label>
+        <input type="text" name="username" id="form-username" placeholder="Enter your username" required>
+    </div>
+    <div class="form-group">
+        <label for="form-password">Password</label>
+        <input type="password" name="password" id="form-password" placeholder="Enter your password" required>
+    </div>
+    <button type="submit">Login</button>
+    {% if error %}
+        <p class="error-message" style="color: red; margin-top: 1rem;">{{ error }}</p>
+    {% endif %}
+
+    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+</form>
+{% endblock %}

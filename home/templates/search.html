@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Quackamender</title>
+    <link rel="stylesheet" href="{% static 'search.css' %}">
+</head>
+<body>
+    <header>
+        <div class="logo-section">
+            <img src="{% static 'quackamender.png' %}" alt="Quackamender Logo" id="logo" style="width: 80px; margin-bottom: 1rem;" href = "{% url 'home' %}" >
+            <h2>Quackamender</h2>
+            <p>Are you a movie? Because I can't wait to recommend you to everyone I know.</p>
+            <p>welcome {{ username }}</p>
+        </div>
+        <div class="search-container">
+            <form method="get" action="{% url 'search' %}" style="display:inline;">
+                <input type="text" id="search-input" name="q" placeholder="Search for movies..." value="{{ query|default:'' }}">
+                <button id="search-button" type="submit">Search</button>
+            </form>
+            <button class="logout-button">Logout</button>
+        </div>
+    </header>
+
+    <div class="search-results">
+        <h2>Search Results{% if query %} for "{{ query }}"{% endif %}</h2>
+        <div class="movie-list">
+            {% if search_results %}
+                {% for movie in search_results %}
+                    <div class="movie-card">
+                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}" class="movie-image">
+                        <h2 class="movie-title">{{ movie.title }}</h2>
+                        <p class="movie-release-date">Release Date: {{ movie.release_date }}</p>
+                        <div class="movie-actions">
+                            <a href="{% url 'movie' movie.id %}" class="btn btn-primary">View Details</a>
+                            <form method="post" action="" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-secondary">Add to Watchlist</button>
+                            </form>
+                            <form method="post" action="" style="display:inline;">
+                                {% csrf_token %}
+                                <label style="display:inline-block; cursor:pointer;">
+                                    <input type="checkbox" style="display:none;" class="heart-checkbox">
+                                    <span style="
+                                        display:inline-block;
+                                        width:36px;
+                                        height:36px;
+                                        position:relative;
+                                        vertical-align:middle;
+                                    ">
+                                        <svg viewBox="0 0 32 29.6" width="32" height="29" style="position:absolute; top:3px; left:2px;">
+                                            <path class="heart-shape" d="M23.6,2.6c-2.6,0-5,1.4-6.6,3.6C15.4,4,13,2.6,10.4,2.6C6.1,2.6,2.6,6.1,2.6,10.4
+                                            c0,7.1,12.4,15.6,12.8,15.9c0.3,0.2,0.7,0.2,1,0c0.5-0.3,12.8-8.8,12.8-15.9C29.4,6.1,25.9,2.6,23.6,2.6z"
+                                            fill="#ccc"/>
+                                        </svg>
+                                    </span>
+                                </label>
+                                <style>
+                                    .heart-checkbox:checked + span .heart-shape {
+                                        fill: #e25555;
+                                    }
+                                    .heart-checkbox + span .heart-shape {
+                                        transition: fill 0.2s;
+                                    }
+                                </style>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No movies found matching your search.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

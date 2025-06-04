@@ -1,0 +1,219 @@
+/* filepath: c:\purab\projects\New folder\quackamender\static\movie.css */
+/* General styles */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    background: linear-gradient(90deg, #4f8cff 0%, #38c6ff 100%);
+    color: #fff;
+    padding: 2rem 1rem 1.5rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+}
+
+.logo-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 350px;
+}
+
+#logo {
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    margin-bottom: 0.5rem;
+}
+
+.logo-section h2 {
+    margin: 0 0 0.3rem 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.logo-section p {
+    margin: 0 0 0.3rem 0;
+    font-size: 1rem;
+    opacity: 0.92;
+}
+
+.logout-button {
+    background: #fff;
+    color: #4f8cff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: auto;
+    margin-top: 1rem;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.logout-button:hover {
+    background: #e6f0ff;
+    color: #2d6cdf;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    margin-left: auto;
+}
+
+#search-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #b3d1ff;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    width: 220px;
+    transition: border 0.2s;
+}
+
+#search-input:focus {
+    border: 1.5px solid #4f8cff;
+}
+
+#search-button {
+    padding: 0.5rem 1.1rem;
+    background: #fff;
+    color: #4f8cff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+#search-button:hover {
+    background: #e6f0ff;
+    color: #2d6cdf;
+}
+
+/* Movie Details Section */
+.movie-details {
+    background: #fff;
+    margin: 2rem auto 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(79, 140, 255, 0.07);
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+    max-width: 900px;
+}
+
+.movie-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 28px 22px 22px 22px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
+}
+
+.movie-card:hover {
+    transform: translateY(-10px) scale(1.03) rotate(-1deg);
+    box-shadow: 0 8px 32px rgba(79,140,255,0.18), 0 2px 8px rgba(0,0,0,0.10);
+    z-index: 2;
+}
+
+.movie-image {
+    width: 250px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.movie-title {
+    font-size: 2em;
+    margin: 0 0 10px 0;
+    color: #222;
+    font-weight: 700;
+}
+
+.movie-release-date,
+.movie-rating {
+    color: #4f8cff;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.movie-overview {
+    margin: 18px 0 18px 0;
+    color: #333;
+    font-size: 1.08em;
+    line-height: 1.6;
+}
+
+.movie-actors {
+    color: #555;
+    font-size: 1.05em;
+    margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+    .movie-details {
+        padding: 1rem;
+        max-width: 98vw;
+    }
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem 0.5rem 1rem 0.5rem;
+    }
+    .search-container {
+        margin-top: 1rem;
+        margin-left: 0;
+    }
+    .movie-card {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 18px 8px 18px 8px;
+    }
+    .movie-image {
+        width: 90vw;
+        max-width: 320px;
+        height: 350px;
+    }
+}
+
+@media (max-width: 600px) {
+    .movie-details {
+        padding: 0.7rem;
+    }
+    .logo-section h2 {
+        font-size: 1.3rem;
+    }
+    .movie-title {
+        font-size: 1.2em;
+    }
+    .movie-image {
+        width: 100vw;
+        max-width: 220px;
+        height: 260px;
+    }
+}
